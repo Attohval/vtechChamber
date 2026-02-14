@@ -7,6 +7,20 @@ if (toggleBtn && navLinks) {
     toggleBtn.setAttribute('aria-expanded', String(isOpen));
   });
 
+  document.addEventListener('click', (event) => {
+    const target = event.target;
+    if (!(target instanceof Node)) {
+      return;
+    }
+
+    const clickedInsideMenu = navLinks.contains(target);
+    const clickedToggle = toggleBtn.contains(target);
+    if (!clickedInsideMenu && !clickedToggle) {
+      navLinks.classList.remove('open');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
   navLinks.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => {
       navLinks.classList.remove('open');
